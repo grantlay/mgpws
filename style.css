@@ -155,16 +155,15 @@ html, body {
   overflow: hidden;
 }
 
+/* Mobile zoom-out using scale while keeping it full width */
 @media screen and (max-width: 768px) {
   .zoom-wrapper {
-    transform: scale(0.9);
-    transform-origin: center;
+    zoom: 0.9;
   }
 }
 
 @media screen and (max-width: 480px) {
   .zoom-wrapper {
-    transform: scale(0.8);
-    transform-origin: center;
+    zoom: 0.8;
   }
 }
