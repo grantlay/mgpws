@@ -136,21 +136,35 @@ input, select, textarea, button {
   }
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #242424;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  height: 100%;
+  overflow: hidden; /* 🚫 disables all scrolling */
+}
+
 .zoom-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 768px) {
   .zoom-wrapper {
     transform: scale(0.9);
+    transform-origin: center;
   }
 }
 
 @media screen and (max-width: 480px) {
   .zoom-wrapper {
     transform: scale(0.8);
+    transform-origin: center;
   }
 }
