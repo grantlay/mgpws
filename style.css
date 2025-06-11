@@ -155,9 +155,9 @@ html, body {
   overflow: hidden;
 }
 
-@media screen and (max-width: 968px) {
+@media screen and (max-width: 768px) {
   .zoom-wrapper {
-    transform: scale(1);
+    transform: scale(0.9);
     transform-origin: center;
   }
 }
