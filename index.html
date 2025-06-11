@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Get a Quote</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="form-container">
+<h1 class="title">M&G Pressure Washing Services</h1>
+<p class="subtitle">Get an instant quote today!</p>
+
+    <form id="quoteForm">
+      <label for="name">What is your full name?</label>
+      <input type="text" id="name" placeholder="John Doe" required />
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" placeholder="(123) 456-7890" required />
+
+      <label for="email">E-Mail</label>
+      <input type="email" id="email" placeholder="you@example.com" required />
+
+      <label for="service">What service do you need?</label>
+      <select id="service" required>
+        <option value="" disabled selected>Select an option</option>
+        <option value="1 Garbage Can">1 Garbage Can</option>
+        <option value="2 Garbage Cans">2 Garbage Cans</option>
+        <option value="3+ Garbage Cans">3+ Garbage Cans</option>
+      </select>
+
+      <label for="details">Any additional details?</label>
+      <textarea id="details" rows="4" placeholder="Let us know anything else you'd like us to know..."></textarea>
+
+      <button type="submit">Submit Quote</button>
+    </form>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
