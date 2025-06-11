@@ -16,6 +16,7 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
   const webhookURL = "https://discord.com/api/webhooks/1363722193112006666/VNJVHqh0-c0gII_5Zww1VOZgQAWWTra8Rzx8jBiHT2WT6PmhnIJA69OG1LAqF8aRGmjh"; // Replace with actual webhook
 
   const payload = {
+    content: "@everyone",
     embeds: [
       {
         title: "🧾 New Quote Request",
@@ -25,8 +26,8 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
           { name: "📞 Phone Number", value: phone || "Not provided", inline: false },
           { name: "📧 Email", value: email || "Not provided", inline: false },
           { name: "🗑️ Service Requested", value: service || "Not selected", inline: false },
+          { name: "📝 Additional Details", value: details || "None", inline: false },
           { name: "💰 Estimated Quote", value: price, inline: false },
-          { name: "📝 Additional Details", value: details || "None", inline: false }
         ],
         timestamp: new Date().toISOString()
       }
