@@ -157,7 +157,7 @@ html, body {
 
 @media screen and (max-width: 968px) {
   .zoom-wrapper {
-    transform: scale(0.9);
+    transform: scale(1);
     transform-origin: center;
   }
 }
