@@ -136,16 +136,21 @@ input, select, textarea, button {
   }
 }
 
+.zoom-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 @media screen and (max-width: 768px) {
-  body {
+  .zoom-wrapper {
     transform: scale(0.9);
-    transform-origin: center;
   }
 }
 
 @media screen and (max-width: 480px) {
-  body {
+  .zoom-wrapper {
     transform: scale(0.8);
-    transform-origin: center;
   }
 }
