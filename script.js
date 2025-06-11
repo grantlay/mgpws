@@ -20,7 +20,7 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
     embeds: [
       {
         title: "🧾 New Quote Request",
-        color: 2654208,
+        color: 28447,
         fields: [
           { name: "👤 Full Name", value: name || "Not provided", inline: false },
           { name: "📞 Phone Number", value: phone || "Not provided", inline: false },
