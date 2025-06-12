@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Client Table</title>
+  <link rel="stylesheet" href="table.css" />
+</head>
+<body>
+  <h1>Client Table</h1>
+
+  <div class="input-group">
+    <input type="text" id="clientName" placeholder="Full Name" required />
+    <input type="tel" id="clientPhone" placeholder="Phone Number" required />
+    <input type="datetime-local" id="clientDateTime" required />
+    <button onclick="addClient()">Add Client</button>
+  </div>
+
+  <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone Number</th>
+      <th>Date & Time</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="clientTableBody">
+    <!-- Client rows go here -->
+  </tbody>
+</table>
+
+
+  <script src="table.js"></script>
+</body>
+</html>
