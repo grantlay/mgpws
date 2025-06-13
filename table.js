@@ -1,4 +1,4 @@
-const endpoint = "https://sheet.best/api/sheets/YOUR-ID-HERE"; // 👈 replace with your real URL
+const endpoint = "https://api.sheetbest.com/sheets/3af1ceac-727a-45ef-8151-daa32ca54439"; // 👈 replace with your real URL
 
 function addClient() {
   const name = document.getElementById("clientName").value.trim();
