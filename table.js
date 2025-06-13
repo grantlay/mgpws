@@ -36,7 +36,7 @@ function addClient() {
 }
 
 function loadClients() {
-fetch("https://docs.google.com/spreadsheets/d/1AbCdefGhIJklMNOPQRstuVWXYZ12345678/gviz/tq?tqx=out:json")
+fetch("https://docs.google.com/spreadsheets/d/1r7l2DJbOtFD6vLrMHih_RvHebCRDieNmQKoZfdS4PfE/edit?usp=sharing")
 
     .then(res => res.text())
     .then(text => {
