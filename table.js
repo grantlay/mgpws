@@ -1,9 +1,12 @@
 const endpoint = "https://api.sheetbest.com/sheets/3af1ceac-727a-45ef-8151-daa32ca54439"; // 👈 replace with your real URL
 
+const endpoint = "https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec"; // Replace this with your actual URL
+
 function addClient() {
   const name = document.getElementById("clientName").value.trim();
   const phone = document.getElementById("clientPhone").value.trim();
   const dateTime = document.getElementById("clientDateTime").value;
+  const id = Date.now().toString();
 
   if (!name || !phone || !dateTime) {
     alert("Please fill out all fields.");
@@ -12,16 +15,16 @@ function addClient() {
 
   fetch(endpoint, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
+    body: new URLSearchParams({
+      action: "add",
       name,
       phone,
       dateTime,
       completed: "false",
-      id: Date.now().toString()
+      id
     })
   })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(() => {
       alert("Client added successfully!");
       document.getElementById("clientName").value = '';
@@ -36,17 +39,26 @@ function addClient() {
 }
 
 function loadClients() {
-  fetch(endpoint)
-    .then(response => response.json())
-    .then(data => {
+  fetch("https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/gviz/tq?tqx=out:json") // Replace with your Google Sheet "Published to web" URL
+    .then(res => res.text())
+    .then(text => {
+      const json = JSON.parse(text.substring(47).slice(0, -2));
       const tbody = document.getElementById("clientTableBody");
       tbody.innerHTML = "";
 
-      data.forEach(client => {
-        const row = document.createElement("tr");
-        if (client.completed === "true") row.classList.add("completed");
+      const headers = json.table.cols.map(col => col.label.toLowerCase());
+      const rows = json.table.rows;
 
-        row.innerHTML = `
+      rows.forEach(row => {
+        const client = {};
+        row.c.forEach((cell, i) => {
+          client[headers[i]] = cell ? cell.v : "";
+        });
+
+        const rowElement = document.createElement("tr");
+        if (client.completed === "true") rowElement.classList.add("completed");
+
+        rowElement.innerHTML = `
           <td>${client.name}</td>
           <td>${client.phone}</td>
           <td>${formatDate(client.dateTime)}</td>
@@ -55,52 +67,34 @@ function loadClients() {
             <button onclick="deleteClient('${client.id}')">🗑️</button>
           </td>
         `;
-        tbody.appendChild(row);
+        tbody.appendChild(rowElement);
       });
     })
-    .catch(error => console.error("Error loading clients:", error));
+    .catch(err => console.error("Error loading clients:", err));
 }
 
 function deleteClient(id) {
-  fetch(endpoint)
-    .then(response => response.json())
-    .then(data => {
-      const filtered = data.filter(client => client.id !== id);
-      updateSheet(filtered);
-    });
+  fetch(endpoint, {
+    method: "POST",
+    body: new URLSearchParams({
+      action: "delete",
+      id
+    })
+  })
+    .then(() => loadClients())
+    .catch(error => console.error("Error deleting:", error));
 }
 
 function markComplete(id) {
-  fetch(endpoint)
-    .then(response => response.json())
-    .then(data => {
-      const updated = data.map(client => {
-        if (client.id === id) {
-          client.completed = client.completed === "true" ? "false" : "true";
-        }
-        return client;
-      });
-      updateSheet(updated);
-    });
-}
-
-function updateSheet(clients) {
-  fetch(endpoint, { method: "DELETE" })
-    .then(() => {
-      return fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(clients.map(client => ({
-          name: client.name,
-          phone: client.phone,
-          dateTime: client.dateTime,
-          completed: client.completed,
-          id: client.id
-        })))
-      });
+  fetch(endpoint, {
+    method: "POST",
+    body: new URLSearchParams({
+      action: "complete",
+      id
     })
+  })
     .then(() => loadClients())
-    .catch(error => console.error("Error updating sheet:", error));
+    .catch(error => console.error("Error marking complete:", error));
 }
 
 function formatDate(dateStr) {
