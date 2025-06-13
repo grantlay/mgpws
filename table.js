@@ -1,7 +1,5 @@
 const endpoint = "https://api.sheetbest.com/sheets/3af1ceac-727a-45ef-8151-daa32ca54439"; // 👈 replace with your real URL
 
-const endpoint = "https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec"; // Replace this with your actual URL
-
 function addClient() {
   const name = document.getElementById("clientName").value.trim();
   const phone = document.getElementById("clientPhone").value.trim();
