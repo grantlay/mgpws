@@ -10,17 +10,15 @@ function addClient() {
     return;
   }
 
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("phone", phone);
+  formData.append("dateTime", dateTime);
+  formData.append("completed", "false");
+
   fetch(endpoint, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      name: name,
-      phone: phone,
-      dateTime: dateTime,
-      completed: false
-    })
+    body: formData
   })
   .then(response => response.text())
   .then(data => {
@@ -30,7 +28,7 @@ function addClient() {
     document.getElementById("clientDateTime").value = '';
   })
   .catch(error => {
-    alert("Error submitting data. Make sure your web app is set to 'Anyone can access'.");
-    console.error(error);
+    console.error("Error:", error);
+    alert("Something went wrong.");
   });
 }
