@@ -22,13 +22,19 @@ function addClient() {
   })
   .then(response => response.text())
   .then(data => {
-    alert("Client added successfully!");
-    document.getElementById("clientName").value = '';
-    document.getElementById("clientPhone").value = '';
-    document.getElementById("clientDateTime").value = '';
+    console.log("Server response:", data);
+
+    if (data.toLowerCase().includes("success")) {
+      alert("Client added successfully!");
+      document.getElementById("clientName").value = '';
+      document.getElementById("clientPhone").value = '';
+      document.getElementById("clientDateTime").value = '';
+    } else {
+      alert("Server error: " + data);
+    }
   })
   .catch(error => {
-    console.error("Error:", error);
+    console.error("Network error:", error);
     alert("Something went wrong.");
   });
 }
