@@ -1,4 +1,4 @@
-const endpoint = "https://api.sheetbest.com/sheets/3af1ceac-727a-45ef-8151-daa32ca54439";
+const endpoint = "https://sheet.best/api/sheets/YOUR-ID-HERE"; // 👈 replace with your real URL
 
 function addClient() {
   const name = document.getElementById("clientName").value.trim();
@@ -10,31 +10,28 @@ function addClient() {
     return;
   }
 
-  const formData = new FormData();
-  formData.append("name", name);
-  formData.append("phone", phone);
-  formData.append("dateTime", dateTime);
-  formData.append("completed", "false");
-
   fetch(endpoint, {
     method: "POST",
-    body: formData
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: name,
+      phone: phone,
+      dateTime: dateTime,
+      completed: false
+    })
   })
-  .then(response => response.text())
+  .then(response => response.json())
   .then(data => {
-    console.log("Server response:", data);
-
-    if (data.toLowerCase().includes("success")) {
-      alert("Client added successfully!");
-      document.getElementById("clientName").value = '';
-      document.getElementById("clientPhone").value = '';
-      document.getElementById("clientDateTime").value = '';
-    } else {
-      alert("Server error: " + data);
-    }
+    console.log("Response:", data);
+    alert("Client added successfully!");
+    document.getElementById("clientName").value = '';
+    document.getElementById("clientPhone").value = '';
+    document.getElementById("clientDateTime").value = '';
   })
   .catch(error => {
-    console.error("Network error:", error);
+    console.error("Error:", error);
     alert("Something went wrong.");
   });
 }
