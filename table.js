@@ -36,7 +36,8 @@ function addClient() {
 }
 
 function loadClients() {
-  fetch("https://docs.google.com/spreadsheets/d/1r7l2DJbOtFD6vLrMHih_RvHebCRDieNmQKoZfdS4PfE/edit?usp=sharing") // Replace with your Google Sheet "Published to web" URL
+fetch("https://docs.google.com/spreadsheets/d/1AbCdefGhIJklMNOPQRstuVWXYZ12345678/gviz/tq?tqx=out:json")
+
     .then(res => res.text())
     .then(text => {
       const json = JSON.parse(text.substring(47).slice(0, -2));
