@@ -1,4 +1,4 @@
-const endpoint = "https://script.google.com/macros/s/AKfycbyeSlSaQ62jv1ZCQTQ_TxRGBnGMMO-QCnMezHyfbtkhQQYL--OxpAVI1kQbxtkQboQC/exec";
+const endpoint = "https://api.sheetbest.com/sheets/3af1ceac-727a-45ef-8151-daa32ca54439";
 
 function addClient() {
   const name = document.getElementById("clientName").value.trim();
