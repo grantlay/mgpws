@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Thank You</title>
-<link rel="icon" href="mglogo.png" type="image/png">
   <link rel="stylesheet" href="style.css" />
   <style>
     h1 {
@@ -53,9 +52,9 @@
     const service = params.get("service");
 
     let price = "N/A";
-    if (service === "1 Garbage Can") price = "$10";
-    else if (service === "2 Garbage Cans") price = "$15";
-    else if (service === "3+ Garbage Cans") price = "$25";
+    if (service === "1 Garbage Can") price = "⭐Only $5";
+    else if (service === "2 Garbage Cans") price = "⭐Only $10";
+    else if (service === "3+ Garbage Cans") price = "⭐Only $15 (Minimum)";
 
     document.getElementById("quoteLabel").textContent = `Your estimated quote for "${service}":`;
     document.getElementById("quotePrice").textContent = price;
