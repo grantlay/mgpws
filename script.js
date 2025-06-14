@@ -16,9 +16,9 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
 
   // Pricing logic
   let price = "N/A";
-  if (service === "1 Garbage Can") price = "$10";
-  else if (service === "2 Garbage Cans") price = "$15";
-  else if (service === "3+ Garbage Cans") price = "$25";
+  if (service === "1 Garbage Can") price = "⭐Only $5";
+  else if (service === "2 Garbage Cans") price = "⭐Only $10";
+  else if (service === "3+ Garbage Cans") price = "⭐Only $15";
 
   const webhookURL = "https://discord.com/api/webhooks/1363722193112006666/VNJVHqh0-c0gII_5Zww1VOZgQAWWTra8Rzx8jBiHT2WT6PmhnIJA69OG1LAqF8aRGmjh";
 
