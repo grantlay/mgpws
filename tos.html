@@ -2,37 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Day of Job Contract</title>
-<link rel="icon" href="mglogo.png" type="image/png">
   <link rel="stylesheet" href="style.css">
   <style>
-    body {
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       background-color: #242424;
       color: white;
       font-family: 'Segoe UI', sans-serif;
-      padding: 2rem;
       margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1rem;
     }
 
     .tos-container {
-      max-width: 800px;
-      margin: 0 auto;
       background-color: #333;
-      padding: 2rem;
       border-radius: 1rem;
+      padding: 2rem;
+      width: 100%;
+      max-width: 800px;
     }
 
     h1 {
       color: #006eff;
       text-align: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-weight: normal;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      line-height: 1.5;
     }
 
     .tos-text {
       white-space: pre-wrap;
       line-height: 1.6;
       font-size: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .tos-container {
+        padding: 1rem;
+        font-size: 0.95rem;
+      }
+
+      h3 {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -50,13 +83,13 @@ We are not responsible for any damage to garbage cans. The customer is liable fo
 3. Access Requirements  
 You agree to provide safe, unobstructed access to your cans on service day.
 
-4. Refund Policy
+4. Refund Policy  
 No refunds are offered once cleaning is completed.
 
 5. Weather Delays  
 Severe weather may result in rescheduling at our discretion.
 
-6. Waste Handling
+6. Waste Handling  
 Any remaining residue inside the garbage cans will be removed by our team, placed into a garbage bag, and properly disposed of upon completion of the job.
 
 7. Media Permission  
