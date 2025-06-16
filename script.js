@@ -1,7 +1,6 @@
 document.getElementById("quoteForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  // Check if TOS checkbox is checked
   const tosCheckbox = document.getElementById("agreeTOS");
   if (!tosCheckbox || !tosCheckbox.checked) {
     alert("You must agree to the Terms of Service before submitting.");
@@ -41,16 +40,14 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
   };
 
   try {
-   await fetch("https://script.google.com/macros/s/AKfycbzHVG24x_oQrShJZhwHreXVHBYaR7qkh1iRYigW9RZg2Olxcxmw7rmVZ2kq5Bts83HALw/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify(payload),
-});
+    await fetch("https://script.google.com/macros/s/AKfycbzHVG24x_oQrShJZhwHreXVHBYaR7qkh1iRYigW9RZg2Olxcxmw7rmVZ2kq5Bts83HALw/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
-
-    // Redirect with quote info
     window.location.href = `finished.html?service=${encodeURIComponent(service)}`;
   } catch (err) {
     console.error("Webhook Error:", err);
