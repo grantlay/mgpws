@@ -20,8 +20,6 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
   else if (service === "2 Garbage Cans") price = "⭐Only $10";
   else if (service === "3+ Garbage Cans") price = "⭐Only $15";
 
-  const webhookURL = "https://discord.com/api/webhooks/1363722193112006666/VNJVHqh0-c0gII_5Zww1VOZgQAWWTra8Rzx8jBiHT2WT6PmhnIJA69OG1LAqF8aRGmjh";
-
   const payload = {
     content: "@everyone",
     embeds: [
@@ -43,13 +41,14 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
   };
 
   try {
-    await fetch(webhookURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
+   await fetch("https://script.google.com/macros/s/AKfycbzHVG24x_oQrShJZhwHreXVHBYaR7qkh1iRYigW9RZg2Olxcxmw7rmVZ2kq5Bts83HALw/exec", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(payload),
+});
+
 
     // Redirect with quote info
     window.location.href = `finished.html?service=${encodeURIComponent(service)}`;
