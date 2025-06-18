@@ -1,15 +1,18 @@
-body {
+/* Base setup */
+html, body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
   background-color: #242424;
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  height: 100%;
+  width: 100%;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
+/* Autofill cleanup */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -21,7 +24,16 @@ textarea:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+/* Wrapper & centering */
+.zoom-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
 
+/* Form box */
 .form-container {
   background-color: #2e2e2e;
   padding: 2rem;
@@ -29,29 +41,30 @@ textarea:-webkit-autofill:focus {
   width: 100%;
   max-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.5s ease forwards;
 }
 
+/* Title */
 h1.title {
   color: #006eff;
-  margin-bottom: 0.2rem; /* reduced spacing */
+  margin-bottom: 0.2rem;
   font-size: 1.75rem;
   font-weight: 600;
   white-space: nowrap;
   text-align: center;
 }
 
+/* Subtitle */
 p.subtitle {
   color: #cccccc;
   font-size: 1rem;
   font-weight: normal;
   text-align: center;
-  margin-bottom: 1rem; /* reduced space below too */
-  margin-top: 0.2rem;  /* added to make it hug the title */
+  margin-bottom: 1rem;
+  margin-top: 0.2rem;
 }
 
-
-
-
+/* Form layout */
 form {
   display: flex;
   flex-direction: column;
@@ -70,13 +83,14 @@ input, select, textarea {
   margin-bottom: 1rem;
   font-size: 1rem;
   font-family: 'Segoe UI', sans-serif;
-  resize: none; /* ← disables scaling */
+  resize: none;
 }
 
 input:focus, textarea:focus, select:focus {
   outline: 2px solid #006eff;
 }
 
+/* Button style */
 button {
   background-color: #006eff;
   color: white;
@@ -91,7 +105,8 @@ button {
 button:hover {
   background-color: #0052c7;
 }
-/* Animate form elements and containers */
+
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -103,16 +118,23 @@ button:hover {
   }
 }
 
-.form-container {
-  animation: fadeIn 0.5s ease forwards;
-}
-
 input, select, textarea, button {
   animation: fadeIn 0.6s ease forwards;
   animation-delay: 0.2s;
 }
 
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+  .zoom-wrapper {
+    zoom: 0.9;
+  }
+}
+
 @media screen and (max-width: 480px) {
+  .zoom-wrapper {
+    zoom: 0.8;
+  }
+
   .form-container {
     width: 90%;
     padding: 1.5rem;
@@ -133,37 +155,5 @@ input, select, textarea, button {
 
   .quote-price {
     font-size: 1.6rem;
-  }
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  background-color: #242424;
-  color: white;
-  font-family: 'Segoe UI', sans-serif;
-  height: 100%;
-  overflow: hidden; /* 🚫 disables all scrolling */
-}
-
-.zoom-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-}
-
-/* Mobile zoom-out using scale while keeping it full width */
-@media screen and (max-width: 768px) {
-  .zoom-wrapper {
-    zoom: 0.9;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .zoom-wrapper {
-    zoom: 0.8;
   }
 }
