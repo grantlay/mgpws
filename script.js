@@ -13,15 +13,13 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
   const address = document.getElementById("address").value.trim();
   const service = document.getElementById("service").value;
   const details = document.getElementById("details").value.trim();
-  const jobTime = document.getElementById("jobTime").value; // ✅ grab job time
+  const jobTime = document.getElementById("jobTime").value;
 
   // Pricing logic
   let price = "N/A";
   if (service === "1 Garbage Can") price = "⭐Only $5";
   else if (service === "2 Garbage Cans") price = "⭐Only $10";
   else if (service === "3+ Garbage Cans") price = "⭐Only $15";
-
-  const webhookURL = "https://discord.com/api/webhooks/1363722193112006666/VNJVHqh0-c0gII_5Zww1VOZgQAWWTra8Rzx8jBiHT2WT6PmhnIJA69OG1LAqF8aRGmjh";
 
   const payload = {
     content: "@everyone",
@@ -34,7 +32,7 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
           { name: "📞 Phone Number", value: phone || "Not provided", inline: false },
           { name: "🏠 Address", value: address || "Not provided", inline: false },
           { name: "🗑️ Service Requested", value: service || "Not selected", inline: false },
-          { name: "💬 Job Time", value: jobTime || "Not set", inline: false }, // ✅ included here
+          { name: "💬 Job Time", value: jobTime || "Not set", inline: false },
           { name: "📝 Additional Details", value: details || "None", inline: false },
           { name: "💰 Estimated Quote", value: price, inline: false },
           { name: "✅ TOS Agreement", value: "Agreed", inline: false }
@@ -45,7 +43,7 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
   };
 
   try {
-    await fetch(webhookURL, {
+    await fetch("/api/sendQuote", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
