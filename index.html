@@ -14,32 +14,39 @@
 
       <form id="quoteForm">
         <label for="name">What is your full name?</label>
-        <input type="text" id="name" placeholder="John Doe" required />
+        <input type="text" id="name" name="name" placeholder="John Doe" autocomplete="name" required />
 
         <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" placeholder="(123) 456-7890" required />
+        <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" inputmode="tel" autocomplete="tel" required />
 
         <label for="address">Address</label>
-        <input type="text" id="address" placeholder="123 Apple St" required />
+        <input type="text" id="address" name="address" placeholder="123 Apple St" autocomplete="street-address" required />
 
         <label for="service">What service do you need?</label>
-        <select id="service" required>
+        <select id="service" name="service" required>
           <option value="" disabled selected>Select an option</option>
           <option value="1 Garbage Can">1 Garbage Can</option>
           <option value="2 Garbage Cans">2 Garbage Cans</option>
           <option value="3+ Garbage Cans">3+ Garbage Cans</option>
         </select>
 
-        <label for="jobTime">Select Job Time <span style="font-weight: normal;">(Do not fill out unless in person)</span></label>
-<input type="time" id="jobTime" />
+        <label for="jobTime">
+          Select Job Time <span class="helper">(Do not fill out unless in person)</span>
+        </label>
+        <input type="time" id="jobTime" name="jobTime" />
 
         <label for="details">Any additional details?</label>
-        <textarea id="details" rows="4" placeholder="Let us know anything else you'd like us to know..."></textarea>
+        <textarea id="details" name="details" rows="4" placeholder="Let us know anything else you'd like us to know..."></textarea>
 
-        <label style="display: flex; align-items: center; gap: 0.5rem;">
-          <input type="checkbox" id="agreeTOS" required>
-          I agree to <a href="tos.html" target="_blank" style="color: #006eff; text-decoration: underline;">Day Of Job Contract</a>
-        </label>
+        <!-- Consent block (fixed layout) -->
+        <div class="consent">
+          <label class="checkbox">
+            <input type="checkbox" id="agreeTOS" name="agreeTOS" required />
+            <span>
+              I agree to <a href="tos.html" target="_blank" rel="noopener">Day Of Job Contract</a>
+            </span>
+          </label>
+        </div>
 
         <button type="submit">Submit Quote</button>
       </form>
