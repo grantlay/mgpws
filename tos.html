@@ -4,89 +4,128 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Day of Job Contract</title>
-  <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="mglogo.png" />
+  <link rel="stylesheet" href="style.css" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
+/* ---------- Theme (same tokens) ---------- */
+:root{
+  color-scheme: dark light;
+  --bg:#121212; --surface:#1c1c1c; --surface-2:#242424;
+  --text:#f5f7fa; --muted:#b8c0cc; --border:#2c2f36;
+  --primary:#2b7fff; --primary-600:#1f66d6;
+  --radius:14px; --shadow-1:0 8px 30px rgba(0,0,0,.35);
+  --font:system-ui,-apple-system,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#f6f8fb; --surface:#fff; --surface-2:#f4f6fa;
+    --text:#0f172a; --muted:#475569; --border:#e5e7eb;
+    --shadow-1:0 10px 40px rgba(15,23,42,.10);
+  }
+}
 
-    html, body {
-      background-color: #242424;
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
+/* ---------- Base ---------- */
+*{box-sizing:border-box}
+html,body{
+  height:100%; margin:0;
+  background:
+    radial-gradient(1100px 700px at 15% -10%, #1a1a1a 0%, var(--bg) 45%) fixed;
+  color:var(--text); font-family:var(--font); line-height:1.6;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+body{
+  display:grid; place-items:start center;
+  padding:clamp(20px,4vw,56px) 16px;
+  animation:bg-pan 20s linear infinite alternate;
+}
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 1rem;
-    }
+/* ---------- Card ---------- */
+.tos-container{
+  position:relative;
+  width:100%; max-width:820px;
+  background:linear-gradient(180deg,var(--surface),var(--surface-2));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:clamp(22px,3.5vw,32px);
+  box-shadow:var(--shadow-1);
+  backdrop-filter:saturate(120%) blur(4px);
+  animation:card-in .5s cubic-bezier(.2,.7,.2,1) both;
+  will-change:transform,opacity;
+}
+/* subtle gradient border glow */
+.tos-container::before{
+  content:""; position:absolute; inset:-1px;
+  border-radius:inherit; pointer-events:none;
+  background:linear-gradient(120deg, transparent 0%, rgba(43,127,255,.35) 50%, transparent 100%);
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  padding:1px; opacity:.35; filter:blur(.5px);
+}
 
-    .tos-container {
-      background-color: #333;
-      border-radius: 1rem;
-      padding: 2rem;
-      width: 100%;
-      max-width: 800px;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeIn 0.6s ease-out forwards;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    }
+/* lift on hover (desktop) */
+@media (hover:hover){
+  .tos-container:hover{ transform:translateY(-2px) }
+}
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+/* ---------- Typography ---------- */
+h1{
+  margin:0 0 .4rem; text-align:center;
+  font-size:clamp(24px,3.2vw,32px); letter-spacing:-.02em;
+  color:var(--primary);
+  animation:rise-in .5s .05s both;
+}
+h1::after{
+  content:""; display:block; margin:.5rem auto 0; height:3px; width:68px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--primary),var(--primary-600));
+  transform-origin:left center; transform:scaleX(0); opacity:.8;
+  animation:underline .6s .2s cubic-bezier(.2,.7,.2,1) both;
+}
 
-    h1 {
-      color: #006eff;
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
+.subtitle{
+  margin:0 0 1.4rem; text-align:center;
+  color:var(--muted); font-size:clamp(14px,2.2vw,16px);
+  animation:rise-in .5s .12s both;
+}
 
-    h3 {
-      font-weight: normal;
-      text-align: center;
-      margin-bottom: 2rem;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
+.tos-text{
+  color:var(--text); font-size:1rem;
+  white-space:pre-wrap;
+  animation:rise-in .5s .18s both;
+}
 
-    .tos-text {
-      white-space: pre-wrap;
-      line-height: 1.6;
-      font-size: 1rem;
-    }
+/* nicer selection */
+::selection{ background:color-mix(in srgb, var(--primary) 35%, transparent); }
 
-    @media (max-width: 600px) {
-      .tos-container {
-        padding: 1rem;
-        font-size: 0.95rem;
-      }
+/* ---------- Keyframes ---------- */
+@keyframes card-in{ from{opacity:0; transform:translateY(10px) scale(.995)} to{opacity:1; transform:translateY(0) scale(1)} }
+@keyframes rise-in{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)} }
+@keyframes underline{ from{transform:scaleX(0); opacity:0} to{transform:scaleX(1); opacity:.9} }
+@keyframes bg-pan{
+  from{ background-position:0 0, center }
+  to{ background-position:40px 0, center }
+}
 
-      h3 {
-        font-size: 0.9rem;
-      }
-    }
+/* ---------- Mobile tweaks ---------- */
+@media (max-width:600px){
+  .tos-container{ padding:18px; border-radius:12px }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important }
+}
+
   </style>
 </head>
 <body>
   <div class="tos-container">
-<h1 class="title">Day of Job Contract</h1>
-   <p class="subtitle">By agreeing, you acknowledge and consent to all terms outlined in this agreement. You grant M&G Pressure Washing Services full permission to perform all services described.</p>
-   <div class="tos-text">
+    <h1>Day of Job Contract</h1>
+    <p class="subtitle">
+      By agreeing, you acknowledge and consent to all terms outlined in this agreement. You grant M&G Pressure Washing Services full permission to perform all services described.
+    </p>
+    <div class="tos-text">
 1. Use of Water  
 You authorize M&G Pressure Washing Services to use your water supply during the cleaning process.
 
