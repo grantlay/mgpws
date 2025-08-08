@@ -2,50 +2,112 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-<link rel="icon" href="mglogo.png" type="image/png">
+  <link rel="icon" href="mglogo.png" type="image/png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Thank You</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    h1 {
-        text-align: center;
+    /* Page-specific polish that reuses your global tokens/animations */
+
+    .thank-wrap {
+      display: grid;
+      place-items: start center;
+      min-height: 100dvh;
+      padding: clamp(20px, 4vw, 48px) 16px;
     }
-    
+
+    /* Reuse the same card style as forms */
+    .thank-card.form-container {
+      position: relative;
+      max-width: 520px;
+      animation: card-in 500ms cubic-bezier(.2,.7,.2,1) both;
+    }
+    .thank-card.form-container::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(120deg, transparent 0%, rgba(43,127,255,.35) 50%, transparent 100%);
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      padding: 1px; opacity: .35; filter: blur(.5px);
+    }
+
+    /* Title & subtitle use your global styles; add entrance */
+    h1.title { animation: rise-in .5s .05s both; }
+    p.subtitle { animation: rise-in .5s .1s both; }
+
+    /* Quote box matches the theme */
     .quote-box {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      background-color: #333;
+      margin-top: 1.25rem;
+      padding: 1.25rem 1rem;
+      background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-1);
       text-align: center;
-      animation: fadeIn 0.5s ease;
-      border-radius: 20px;
+      animation: rise-in .5s .14s both;
     }
-
     .quote-label {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      color: #cccccc;
+      font-size: 1rem;
+      margin-bottom: .35rem;
+      color: var(--muted);
     }
-
     .quote-price {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #ffffff;
+      font-size: clamp(22px, 4.6vw, 28px);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--text);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Button back to home (optional) */
+    .actions {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+    }
+    .actions a.button {
+      display: inline-block;
+      text-decoration: none;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-600) 100%);
+      color: #fff;
+      font-weight: 600;
+      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
+      box-shadow: 0 10px 20px color-mix(in srgb, var(--primary) 25%, transparent);
+    }
+    .actions a.button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px color-mix(in srgb, var(--primary) 30%, transparent);
+      filter: saturate(1.05);
+    }
+    .actions a.button:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px var(--ring), 0 10px 20px color-mix(in srgb, var(--primary) 25%, transparent);
     }
   </style>
 </head>
 <body>
-  <div class="zoom-wrapper">
-    <div class="form-container">
-    <h1 class="title">Thanks for Submitting</h1>
+  <div class="zoom-wrapper thank-wrap">
+    <div class="form-container thank-card">
+      <h1 class="title">Thanks for Submitting</h1>
       <p class="subtitle">Someone on our team will call you back soon!</p>
-    <div class="quote-box">
-      <div class="quote-label" id="quoteLabel">Calculating your quote...</div>
-      <div class="quote-price" id="quotePrice">—</div>
+
+      <div class="quote-box">
+        <div class="quote-label" id="quoteLabel">Calculating your quote...</div>
+        <div class="quote-price" id="quotePrice">—</div>
+      </div>
+
+      <!-- Optional: CTA back home -->
+      <!--
+      <div class="actions">
+        <a class="button" href="index.html">Back to Home</a>
+      </div>
+      -->
     </div>
   </div>
 
@@ -53,13 +115,21 @@
     const params = new URLSearchParams(window.location.search);
     const service = params.get("service");
 
-    let price = "N/A";
-    if (service === "1 Garbage Can") price = "⭐Only $5";
-    else if (service === "2 Garbage Cans") price = "⭐Only $10";
-    else if (service === "3+ Garbage Cans") price = "⭐Only $15 (Minimum)";
+    const label = document.getElementById("quoteLabel");
+    const priceEl = document.getElementById("quotePrice");
 
-    document.getElementById("quoteLabel").textContent = `Your estimated quote for "${service}":`;
-    document.getElementById("quotePrice").textContent = price;
+    // Defensive: handle missing/unknown service
+    const map = {
+      "1 Garbage Can": "⭐ Only $5",
+      "2 Garbage Cans": "⭐ Only $10",
+      "3+ Garbage Cans": "⭐ Only $15 (Minimum)"
+    };
+    const price = map[service] ?? "N/A";
+
+    label.textContent = service
+      ? `Your estimated quote for "${service}":`
+      : "Your estimated quote:";
+    priceEl.textContent = price;
   </script>
 </body>
 </html>
