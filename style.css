@@ -1,159 +1,381 @@
-/* Base setup */
+/* =========================
+   Modern, Accessible Form UI
+   with polished motion
+   ========================= */
+
+/* Design tokens */
+:root {
+  color-scheme: dark light;
+  --bg: #121212;
+  --surface: #1c1c1c;
+  --surface-2: #242424;
+  --text: #f5f7fa;
+  --muted: #b8c0cc;
+  --border: #2c2f36;
+
+  --primary: #2b7fff;
+  --primary-600: #1f66d6;
+  --ring: color-mix(in srgb, var(--primary) 65%, transparent);
+
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow-1: 0 8px 30px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 12px 40px rgba(0, 0, 0, 0.45);
+
+  --gap: 16px;
+  --pad: 24px;
+
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+
+  --field-bg: #2a2a2a;
+  --field-bg-focus: #2f2f2f;
+  --placeholder: #8a93a1;
+
+  --transition: 160ms ease;
+}
+
+/* Optional light mode (auto via OS setting) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f8fb;
+    --surface: #ffffff;
+    --surface-2: #f4f6fa;
+    --text: #0f172a;
+    --muted: #475569;
+    --border: #e5e7eb;
+
+    --field-bg: #f9fafb;
+    --field-bg-focus: #ffffff;
+
+    --shadow-1: 0 10px 40px rgba(15, 23, 42, 0.10);
+    --shadow-2: 0 18px 48px rgba(15, 23, 42, 0.14);
+  }
+}
+
+/* Base reset */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
 html, body {
   margin: 0;
   padding: 0;
-  background-color: #242424;
-  color: white;
-  font-family: 'Segoe UI', sans-serif;
   height: 100%;
   width: 100%;
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
-/* Autofill cleanup */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus {
-  box-shadow: 0 0 0px 1000px #444 inset !important;
-  -webkit-text-fill-color: #fff !important;
-  transition: background-color 5000s ease-in-out 0s;
+html { scroll-behavior: smooth; }
+
+body {
+  background:
+    radial-gradient(1200px 800px at 15% -10%, #1a1a1a 0%, var(--bg) 45%) fixed;
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+
+  /* subtle animated background pan */
+  animation: bg-pan 20s linear infinite alternate;
 }
 
 /* Wrapper & centering */
 .zoom-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 2rem 1rem;
+  display: grid;
+  place-items: start center;
+  min-height: 100dvh;
+  padding: clamp(20px, 4vw, 48px) 16px;
 }
 
-/* Form box */
+/* Card */
 .form-container {
-  background-color: #2e2e2e;
-  padding: 2rem;
-  border-radius: 1rem;
+  position: relative;
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  animation: fadeIn 0.5s ease forwards;
+  max-width: 460px;
+  padding: clamp(20px, 3.5vw, 28px);
+  box-shadow: var(--shadow-1);
+  backdrop-filter: saturate(120%) blur(4px);
+
+  /* smoother entrance */
+  animation: card-in 500ms cubic-bezier(.2,.7,.2,1) both;
+  will-change: transform, opacity;
 }
 
-/* Title */
+/* gradient border glow */
+.form-container::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 0%, rgba(43,127,255,.35) 50%, transparent 100%);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  padding: 1px;
+  opacity: .35;
+  filter: blur(.5px);
+}
+
+/* slight lift on hover (desktop only) */
+@media (hover:hover) {
+  .form-container:hover { transform: translateY(-2px); }
+}
+
+/* Titles */
 h1.title {
-  color: #006eff;
-  margin-bottom: 0.2rem;
-  font-size: 1.75rem;
-  font-weight: 600;
-  white-space: nowrap;
+  margin: 0 0 6px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: clamp(22px, 3.2vw, 30px);
   text-align: center;
+  color: var(--primary);
+  animation: rise-in .5s .05s both;
 }
 
-/* Subtitle */
+/* animated underline */
+h1.title::after{
+  content:"";
+  display:block;
+  margin:.5rem auto 0;
+  height:3px; width:68px; border-radius:999px;
+  background:linear-gradient(90deg,var(--primary),var(--primary-600));
+  transform-origin:left center; transform:scaleX(0); opacity:.8;
+  animation: underline .6s .18s cubic-bezier(.2,.7,.2,1) both;
+}
+
 p.subtitle {
-  color: #cccccc;
-  font-size: 1rem;
-  font-weight: normal;
+  margin: 0 0 16px;
   text-align: center;
-  margin-bottom: 1rem;
-  margin-top: 0.2rem;
+  color: var(--muted);
+  font-size: clamp(14px, 2.2vw, 16px);
+  animation: rise-in .5s .1s both;
 }
 
 /* Form layout */
 form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  gap: var(--gap);
+  animation: rise-in .5s .14s both;
 }
 
 label {
-  margin: 0.5rem 0 0.2rem;
+  font-size: 0.95rem;
+  color: var(--muted);
 }
 
+/* Fields */
 input, select, textarea {
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  border: none;
-  background-color: #444;
-  color: white;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  font-family: 'Segoe UI', sans-serif;
-  resize: none;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--field-bg);
+  color: var(--text);
+  font: inherit;
+  outline: none;
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition), filter var(--transition);
 }
 
-input:focus, textarea:focus, select:focus {
-  outline: 2px solid #006eff;
+input::placeholder,
+textarea::placeholder { color: var(--placeholder); }
+
+textarea { resize: vertical; min-height: 110px; }
+
+input:hover,
+select:hover,
+textarea:hover {
+  background: var(--field-bg-focus);
 }
 
-/* Button style */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  background: var(--field-bg-focus);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--ring);
+  transform: translateY(-1px);
+}
+
+/* Inline links inside the form */
+form a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Helper & error text */
+.helper {
+  margin-top: -6px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.error {
+  margin-top: -6px;
+  color: #ff6868;
+  font-size: 0.9rem;
+}
+
+/* Consent / checkbox row */
+.consent {
+  margin-top: -4px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.35;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.checkbox input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: var(--primary);
+  border-radius: 4px;
+  transition: transform var(--transition), filter var(--transition);
+}
+
+.checkbox input[type="checkbox"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--ring);
+  transform: translateY(-1px);
+}
+
+.checkbox span { color: var(--muted); }
+.checkbox span a { margin-left: 4px; }
+.checkbox span a + a { margin-left: 8px; }
+
+/* Button */
 button {
-  background-color: #006eff;
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+  background: linear-gradient(180deg, var(--primary) 0%, var(--primary-600) 100%);
   color: white;
-  border: none;
-  padding: 0.75rem;
+  padding: 12px 14px;
   font-size: 1rem;
-  border-radius: 0.5rem;
+  font-weight: 600;
+  border-radius: 12px;
   cursor: pointer;
-  transition: 0.2s;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    opacity var(--transition),
+    filter var(--transition);
+  box-shadow: 0 10px 20px color-mix(in srgb, var(--primary) 25%, transparent);
 }
 
 button:hover {
-  background-color: #0052c7;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px color-mix(in srgb, var(--primary) 30%, transparent);
+  filter: saturate(1.05);
+}
+
+button:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+
+button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px var(--ring),
+    0 10px 20px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Two-column rows (opt-in) */
+.row {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+
+/* Autofill cleanup (WebKit + standard) */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: var(--text) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--field-bg) inset !important;
+  box-shadow: 0 0 0px 1000px var(--field-bg) inset !important;
+  transition: background-color 9999s ease-out 0s;
+}
+input:autofill,
+textarea:autofill,
+select:autofill {
+  filter: none;
+}
+
+/* Nice selection */
+::selection{
+  background: color-mix(in srgb, var(--primary) 35%, transparent);
 }
 
 /* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(10px) scale(.995); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes underline {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: .9; }
+}
+@keyframes bg-pan {
+  from { background-position: 0 0, center; }
+  to   { background-position: 40px 0, center; }
 }
 
-input, select, textarea, button {
-  animation: fadeIn 0.6s ease forwards;
-  animation-delay: 0.2s;
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
 
-/* Mobile adjustments */
-@media screen and (max-width: 768px) {
-  .zoom-wrapper {
-    zoom: 0.9;
-  }
+/* Responsive typography & spacing */
+@media (max-width: 480px) {
+  .form-container { padding: 18px; border-radius: 12px; }
+  button, input, select, textarea { font-size: 0.95rem; padding: 11px 12px; }
 }
 
-@media screen and (max-width: 480px) {
-  .zoom-wrapper {
-    zoom: 0.8;
-  }
+/* Nice scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+}
+*::-webkit-scrollbar { height: 10px; width: 10px; }
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary), var(--primary-600));
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-track { background: transparent; }
 
-  .form-container {
-    width: 90%;
-    padding: 1.5rem;
-  }
-
-  h1.title {
-    font-size: 1.5rem;
-  }
-
-  p.subtitle {
-    font-size: 0.95rem;
-  }
-
-  input, select, textarea, button {
-    font-size: 0.95rem;
-    padding: 0.65rem;
-  }
-
-  .quote-price {
-    font-size: 1.6rem;
-  }
+/* Optional price text */
+.quote-price {
+  font-size: clamp(22px, 4.6vw, 28px);
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
