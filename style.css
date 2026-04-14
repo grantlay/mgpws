@@ -1,381 +1,560 @@
-/* =========================
-   Modern, Accessible Form UI
-   with polished motion
-   ========================= */
+/* =========================================
+   Premium Split-Panel Form UI
+   ========================================= */
 
-/* Design tokens */
 :root {
-  color-scheme: dark light;
-  --bg: #121212;
-  --surface: #1c1c1c;
-  --surface-2: #242424;
-  --text: #f5f7fa;
-  --muted: #b8c0cc;
-  --border: #2c2f36;
-
+  /* Core Colors */
   --primary: #2b7fff;
-  --primary-600: #1f66d6;
-  --ring: color-mix(in srgb, var(--primary) 65%, transparent);
+  --primary-hover: #1f66d6;
+  --primary-light: rgba(43, 127, 255, 0.1);
+  
+  /* Light Theme */
+  --bg-color: #eef2f6;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --input-bg: #f9fafb;
+  
+  /* Brand Panel */
+  --brand-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --brand-text: #ffffff;
+  --brand-text-muted: #94a3b8;
 
-  --radius: 14px;
-  --radius-sm: 10px;
-  --shadow-1: 0 8px 30px rgba(0, 0, 0, 0.35);
-  --shadow-2: 0 12px 40px rgba(0, 0, 0, 0.45);
-
-  --gap: 16px;
-  --pad: 24px;
-
-  --font: system-ui, -apple-system, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
-
-  --field-bg: #2a2a2a;
-  --field-bg-focus: #2f2f2f;
-  --placeholder: #8a93a1;
-
-  --transition: 160ms ease;
+  --radius: 20px;
+  --font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Optional light mode (auto via OS setting) */
-@media (prefers-color-scheme: light) {
+/* Dark Mode Overrides */
+@media (prefers-color-scheme: dark) {
   :root {
-    --bg: #f6f8fb;
-    --surface: #ffffff;
-    --surface-2: #f4f6fa;
-    --text: #0f172a;
-    --muted: #475569;
-    --border: #e5e7eb;
-
-    --field-bg: #f9fafb;
-    --field-bg-focus: #ffffff;
-
-    --shadow-1: 0 10px 40px rgba(15, 23, 42, 0.10);
-    --shadow-2: 0 18px 48px rgba(15, 23, 42, 0.14);
+    --bg-color: #0b0f19;
+    --card-bg: #1e2433;
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --border-color: #374151;
+    --input-bg: #111827;
   }
 }
 
-/* Base reset */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
-html, body {
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  height: 100%;
-  width: 100%;
 }
-
-html { scroll-behavior: smooth; }
 
 body {
-  background:
-    radial-gradient(1200px 800px at 15% -10%, #1a1a1a 0%, var(--bg) 45%) fixed;
-  color: var(--text);
-  font-family: var(--font);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  overflow-x: hidden;
-
-  /* subtle animated background pan */
-  animation: bg-pan 20s linear infinite alternate;
-}
-
-/* Wrapper & centering */
-.zoom-wrapper {
-  display: grid;
-  place-items: start center;
-  min-height: 100dvh;
-  padding: clamp(20px, 4vw, 48px) 16px;
-}
-
-/* Card */
-.form-container {
-  position: relative;
-  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  width: 100%;
-  max-width: 460px;
-  padding: clamp(20px, 3.5vw, 28px);
-  box-shadow: var(--shadow-1);
-  backdrop-filter: saturate(120%) blur(4px);
-
-  /* smoother entrance */
-  animation: card-in 500ms cubic-bezier(.2,.7,.2,1) both;
-  will-change: transform, opacity;
-}
-
-/* gradient border glow */
-.form-container::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  pointer-events: none;
-  background: linear-gradient(120deg, transparent 0%, rgba(43,127,255,.35) 50%, transparent 100%);
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  padding: 1px;
-  opacity: .35;
-  filter: blur(.5px);
-}
-
-/* slight lift on hover (desktop only) */
-@media (hover:hover) {
-  .form-container:hover { transform: translateY(-2px); }
-}
-
-/* Titles */
-h1.title {
-  margin: 0 0 6px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  font-size: clamp(22px, 3.2vw, 30px);
-  text-align: center;
-  color: var(--primary);
-  animation: rise-in .5s .05s both;
-}
-
-/* animated underline */
-h1.title::after{
-  content:"";
-  display:block;
-  margin:.5rem auto 0;
-  height:3px; width:68px; border-radius:999px;
-  background:linear-gradient(90deg,var(--primary),var(--primary-600));
-  transform-origin:left center; transform:scaleX(0); opacity:.8;
-  animation: underline .6s .18s cubic-bezier(.2,.7,.2,1) both;
-}
-
-p.subtitle {
-  margin: 0 0 16px;
-  text-align: center;
-  color: var(--muted);
-  font-size: clamp(14px, 2.2vw, 16px);
-  animation: rise-in .5s .1s both;
-}
-
-/* Form layout */
-form {
-  display: grid;
-  gap: var(--gap);
-  animation: rise-in .5s .14s both;
-}
-
-label {
-  font-size: 0.95rem;
-  color: var(--muted);
-}
-
-/* Fields */
-input, select, textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--field-bg);
-  color: var(--text);
-  font: inherit;
-  outline: none;
-  transition:
-    border-color var(--transition),
-    background var(--transition),
-    box-shadow var(--transition),
-    transform var(--transition), filter var(--transition);
-}
-
-input::placeholder,
-textarea::placeholder { color: var(--placeholder); }
-
-textarea { resize: vertical; min-height: 110px; }
-
-input:hover,
-select:hover,
-textarea:hover {
-  background: var(--field-bg-focus);
-}
-
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  background: var(--field-bg-focus);
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px var(--ring);
-  transform: translateY(-1px);
-}
-
-/* Inline links inside the form */
-form a {
-  color: var(--primary);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Helper & error text */
-.helper {
-  margin-top: -6px;
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
-.error {
-  margin-top: -6px;
-  color: #ff6868;
-  font-size: 0.9rem;
-}
-
-/* Consent / checkbox row */
-.consent {
-  margin-top: -4px;
-}
-
-.checkbox {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  line-height: 1.35;
-  font-size: 0.95rem;
-  color: var(--muted);
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  -webkit-font-smoothing: antialiased;
 }
 
-.checkbox input[type="checkbox"] {
-  flex: 0 0 auto;
-  width: 18px;
-  height: 18px;
-  margin: 2px 0 0;
-  accent-color: var(--primary);
-  border-radius: 4px;
-  transition: transform var(--transition), filter var(--transition);
+/* Layout Wrapper */
+.page-wrapper {
+  width: 100%;
+  max-width: 1000px;
 }
 
-.checkbox input[type="checkbox"]:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 4px var(--ring);
-  transform: translateY(-1px);
+.premium-card {
+  display: flex;
+  background-color: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+  animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.checkbox span { color: var(--muted); }
-.checkbox span a { margin-left: 4px; }
-.checkbox span a + a { margin-left: 8px; }
+/* ================= Left Panel (Branding) ================= */
+.brand-panel {
+  flex: 0 0 40%;
+  background: var(--brand-bg);
+  color: var(--brand-text);
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-/* Button */
-button {
-  appearance: none;
-  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
-  background: linear-gradient(180deg, var(--primary) 0%, var(--primary-600) 100%);
+.brand-content {
+  position: relative;
+  z-index: 2;
+}
+
+.logo-mark {
+  display: inline-block;
+  background: var(--primary);
   color: white;
-  padding: 12px 14px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+.brand-panel h1 {
+  font-size: 2.2rem;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.brand-panel p {
+  color: var(--brand-text-muted);
   font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.feature-list svg {
+  width: 20px;
+  height: 20px;
+  color: var(--primary);
+}
+
+/* Abstract Background Blobs */
+.blob-1, .blob-2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 1;
+  opacity: 0.5;
+}
+.blob-1 {
+  width: 300px;
+  height: 300px;
+  background: var(--primary);
+  top: -100px;
+  left: -100px;
+}
+.blob-2 {
+  width: 250px;
+  height: 250px;
+  background: #4f46e5;
+  bottom: -50px;
+  right: -50px;
+}
+
+/* ================= Right Panel (Form) ================= */
+.form-panel {
+  flex: 1;
+  padding: 3rem;
+}
+
+.form-header {
+  margin-bottom: 2.5rem;
+}
+
+.form-header h2 {
+  font-size: 1.8rem;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.form-header p {
+  color: var(--text-muted);
+}
+
+.input-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.input-row > * { flex: 1; }
+
+/* Floating Label Inputs */
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-group input:not([type="time"]),
+.input-group textarea {
+  width: 100%;
+  padding: 1.2rem 1rem 0.6rem 1rem;
+  background-color: #111827; /* forced color */
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  color: #ffffff; /* fixed (also corrected your syntax) */
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.input-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.input-group label:not(.static-label) {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  color: var(--text-muted);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+/* Floating Animation */
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label,
+.input-group textarea:focus ~ label,
+.input-group textarea:not(:placeholder-shown) ~ label {
+  top: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--primary);
   font-weight: 600;
-  border-radius: 12px;
-  cursor: pointer;
-  transition:
-    transform var(--transition),
-    box-shadow var(--transition),
-    opacity var(--transition),
-    filter var(--transition);
-  box-shadow: 0 10px 20px color-mix(in srgb, var(--primary) 25%, transparent);
 }
 
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 28px color-mix(in srgb, var(--primary) 30%, transparent);
-  filter: saturate(1.05);
-}
-
-button:active {
-  transform: translateY(0);
-  filter: brightness(0.98);
-}
-
-button:focus-visible {
+.input-group input:focus,
+.input-group textarea:focus {
   outline: none;
-  box-shadow:
-    0 0 0 4px var(--ring),
-    0 10px 20px color-mix(in srgb, var(--primary) 25%, transparent);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-light);
+  background-color: var(--card-bg);
 }
 
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+/* Select & Time Inputs (Static labels work better here) */
+.static-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
 }
 
-/* Two-column rows (opt-in) */
-.row {
-  display: grid;
-  gap: var(--gap);
-  grid-template-columns: 1fr 1fr;
-}
-@media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+.muted { font-weight: 400; opacity: 0.8; }
 
-/* Autofill cleanup (WebKit + standard) */
-input:-webkit-autofill,
-textarea:-webkit-autofill,
-select:-webkit-autofill {
-  -webkit-text-fill-color: var(--text) !important;
-  -webkit-box-shadow: 0 0 0px 1000px var(--field-bg) inset !important;
-  box-shadow: 0 0 0px 1000px var(--field-bg) inset !important;
-  transition: background-color 9999s ease-out 0s;
-}
-input:autofill,
-textarea:autofill,
-select:autofill {
-  filter: none;
+.input-group select,
+.input-group input[type="time"] {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
-/* Nice selection */
-::selection{
-  background: color-mix(in srgb, var(--primary) 35%, transparent);
+.input-group select:focus,
+.input-group input[type="time"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+/* Custom Checkbox */
+.checkbox-wrapper {
+  margin: 1rem 0 2rem;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  width: 24px;
+  height: 24px;
+  background-color: var(--input-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.checkmark svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.custom-checkbox input:checked ~ .checkmark svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.custom-checkbox input:focus ~ .checkmark {
+  box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+.checkbox-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.checkbox-text a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.checkbox-text a:hover { text-decoration: underline; }
+
+/* Premium Submit Button */
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 20px var(--primary-light);
+}
+
+.submit-btn svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(43, 127, 255, 0.25);
+}
+
+.submit-btn:hover svg {
+  transform: translateX(4px);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
 }
 
 /* Animations */
-@keyframes card-in {
-  from { opacity: 0; transform: translateY(10px) scale(.995); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-@keyframes rise-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes underline {
-  from { transform: scaleX(0); opacity: 0; }
-  to   { transform: scaleX(1); opacity: .9; }
-}
-@keyframes bg-pan {
-  from { background-position: 0 0, center; }
-  to   { background-position: 40px 0, center; }
+@keyframes scaleIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive typography & spacing */
+/* --- THE PERFECT COLOR MATCH AUTOFILL FIX --- */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-internal-autofill-selected {
+  /* 1. Force the background to match your card color exactly */
+  /* If #161c2d isn't quite right, try #111827 or your --card-bg variable */
+  -webkit-box-shadow: 0 0 0px 1000px #161c2d inset !important;
+  
+  /* 2. Force the text to stay white */
+  -webkit-text-fill-color: #ffffff !important;
+  
+  /* 3. Keep the border subtle so it doesn't stand out */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+  /* 4. Kill the browser's 'blue' highlight */
+  caret-color: white;
+  
+  /* 5. Prevent the color from snapping back if you click away */
+  transition: background-color 5000000s ease-in-out 0s;
+}
+
+/* Ensure the box doesn't change color when you click it after autofilling */
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #161c2d inset, 0 0 0 2px rgba(43, 127, 255, 0.2) !important;
+}
+
+/* --- THE FINAL BOSS OF AUTOFILL FIXES --- */
+
+/* 1. Target every single possible autofill state including internal ones */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-internal-autofill-previewed,
+input:-internal-autofill-selected {
+    /* Kill the border and outline completely */
+    border: 1px solid var(--border-color) !important;
+    outline: none !important;
+    
+    /* Use a very long transition to 'freeze' the styles */
+    transition: background-color 50000s ease-in-out 0s, color 50000s ease-in-out 0s;
+    
+    /* Force the background color using an inset shadow */
+    -webkit-box-shadow: 0 0 0px 1000px #161c2d inset !important;
+    
+    /* Force text color */
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* 2. This specifically targets the "White Border" ring */
+input:focus-visible {
+    outline: none !important;
+    border: 1px solid var(--primary) !important;
+}
+
+/* 3. Global reset for the 'Focus' state which causes that white box */
+:focus {
+    outline: 0 !important;
+    outline: none !important;
+}
+
+/* 4. This is a hack for Chrome - it stops the 'blue/white' selection border */
+::-webkit-contacts-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+}
+
+/* --- Final Autofill Fix: No Transparency, No Invisibility --- */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  /* 1. Force the background to stay dark using an internal shadow */
+  /* Use the exact hex code of your card background here if it differs */
+  -webkit-box-shadow: 0 0 0px 1000px #161c2d inset !important;
+  
+  /* 2. Force the text to stay white */
+  -webkit-text-fill-color: #ffffff !important;
+  
+  /* 3. Force the border to stay visible and solid */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+  /* 4. The Magic Trick: Prevent the browser from ever finishing the color change */
+  transition: background-color 50000s ease-in-out 0s;
+  
+  /* 5. Ensure the font matches your premium look */
+  font-family: inherit !important;
+  font-size: 1rem !important;
+}
+
+/* Ensure that even when clicked/focused, the autofill doesn't freak out */
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #161c2d inset, 0 0 0 4px rgba(43, 127, 255, 0.2) !important;
+  border-color: #2b7fff !important;
+}
+
+.main-logo {
+  display: block;
+  width: 100%;
+  max-width: 280px; /* Adjust this to control how "big" it feels */
+  height: auto;
+  margin-bottom: 2.5rem;
+  
+  /* Adds a subtle premium depth to the image */
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.4));
+  
+  /* Smooth entrance animation */
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* On mobile, we might want the logo a bit smaller to save space */
+@media (max-width: 860px) {
+  .main-logo {
+    max-width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .brand-panel p {
+    text-align: center;
+  }
+  
+  .feature-list {
+    align-items: center;
+  }
+}
+
+.stagger-1 { animation: slideUp 0.5s ease 0.1s both; }
+.stagger-2 { animation: slideUp 0.5s ease 0.2s both; }
+.stagger-3 { animation: slideUp 0.5s ease 0.3s both; }
+.stagger-4 { animation: slideUp 0.5s ease 0.4s both; }
+.stagger-5 { animation: slideUp 0.5s ease 0.5s both; }
+.stagger-6 { animation: slideUp 0.5s ease 0.6s both; }
+.stagger-7 { animation: slideUp 0.5s ease 0.7s both; }
+
+/* Responsive Design */
+@media (max-width: 860px) {
+  .premium-card {
+    flex-direction: column;
+  }
+  
+  .brand-panel {
+    padding: 2.5rem 2rem;
+  }
+  
+  .form-panel {
+    padding: 2.5rem 2rem;
+  }
+  
+  .input-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
 @media (max-width: 480px) {
-  .form-container { padding: 18px; border-radius: 12px; }
-  button, input, select, textarea { font-size: 0.95rem; padding: 11px 12px; }
-}
-
-/* Nice scrollbars */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) transparent;
-}
-*::-webkit-scrollbar { height: 10px; width: 10px; }
-*::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--primary), var(--primary-600));
-  border-radius: 999px;
-}
-*::-webkit-scrollbar-track { background: transparent; }
-
-/* Optional price text */
-.quote-price {
-  font-size: clamp(22px, 4.6vw, 28px);
-  text-align: center;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  body { padding: 0; }
+  
+  .page-wrapper { max-width: 100%; }
+  
+  .premium-card {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
 }
