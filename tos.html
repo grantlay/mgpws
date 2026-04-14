@@ -2,154 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Day of Job Contract</title>
-  <link rel="icon" type="image/png" href="mglogo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contract | M&G Pressure Washing</title>
+  <link rel="icon" href="mglogo.png" type="image/png">
   <link rel="stylesheet" href="style.css" />
   <style>
-/* ---------- Theme (same tokens) ---------- */
-:root{
-  color-scheme: dark light;
-  --bg:#121212; --surface:#1c1c1c; --surface-2:#242424;
-  --text:#f5f7fa; --muted:#b8c0cc; --border:#2c2f36;
-  --primary:#2b7fff; --primary-600:#1f66d6;
-  --radius:14px; --shadow-1:0 8px 30px rgba(0,0,0,.35);
-  --font:system-ui,-apple-system,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
-}
-@media (prefers-color-scheme: light){
-  :root{
-    --bg:#f6f8fb; --surface:#fff; --surface-2:#f4f6fa;
-    --text:#0f172a; --muted:#475569; --border:#e5e7eb;
-    --shadow-1:0 10px 40px rgba(15,23,42,.10);
-  }
-}
+    .tos-header {
+      background: var(--brand-bg);
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-/* ---------- Base ---------- */
-*{box-sizing:border-box}
-html,body{
-  height:100%; margin:0;
-  background:
-    radial-gradient(1100px 700px at 15% -10%, #1a1a1a 0%, var(--bg) 45%) fixed;
-  color:var(--text); font-family:var(--font); line-height:1.6;
-  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-}
-body{
-  display:grid; place-items:start center;
-  padding:clamp(20px,4vw,56px) 16px;
-  animation:bg-pan 20s linear infinite alternate;
-}
+    .tos-logo {
+      height: 50px;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 2;
+    }
 
-/* ---------- Card ---------- */
-.tos-container{
-  position:relative;
-  width:100%; max-width:820px;
-  background:linear-gradient(180deg,var(--surface),var(--surface-2));
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:clamp(22px,3.5vw,32px);
-  box-shadow:var(--shadow-1);
-  backdrop-filter:saturate(120%) blur(4px);
-  animation:card-in .5s cubic-bezier(.2,.7,.2,1) both;
-  will-change:transform,opacity;
-}
-/* subtle gradient border glow */
-.tos-container::before{
-  content:""; position:absolute; inset:-1px;
-  border-radius:inherit; pointer-events:none;
-  background:linear-gradient(120deg, transparent 0%, rgba(43,127,255,.35) 50%, transparent 100%);
-  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  padding:1px; opacity:.35; filter:blur(.5px);
-}
+    .tos-content {
+      padding: 3rem;
+    }
 
-/* lift on hover (desktop) */
-@media (hover:hover){
-  .tos-container:hover{ transform:translateY(-2px) }
-}
+    .tos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
 
-/* ---------- Typography ---------- */
-h1{
-  margin:0 0 .4rem; text-align:center;
-  font-size:clamp(24px,3.2vw,32px); letter-spacing:-.02em;
-  color:var(--primary);
-  animation:rise-in .5s .05s both;
-}
-h1::after{
-  content:""; display:block; margin:.5rem auto 0; height:3px; width:68px;
-  border-radius:999px;
-  background:linear-gradient(90deg,var(--primary),var(--primary-600));
-  transform-origin:left center; transform:scaleX(0); opacity:.8;
-  animation:underline .6s .2s cubic-bezier(.2,.7,.2,1) both;
-}
+    .tos-item {
+      padding: 1.5rem;
+      background: var(--input-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
 
-.subtitle{
-  margin:0 0 1.4rem; text-align:center;
-  color:var(--muted); font-size:clamp(14px,2.2vw,16px);
-  animation:rise-in .5s .12s both;
-}
+    .tos-item h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+    }
 
-.tos-text{
-  color:var(--text); font-size:1rem;
-  white-space:pre-wrap;
-  animation:rise-in .5s .18s both;
-}
+    .tos-item span {
+      background: var(--primary);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
 
-/* nicer selection */
-::selection{ background:color-mix(in srgb, var(--primary) 35%, transparent); }
-
-/* ---------- Keyframes ---------- */
-@keyframes card-in{ from{opacity:0; transform:translateY(10px) scale(.995)} to{opacity:1; transform:translateY(0) scale(1)} }
-@keyframes rise-in{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)} }
-@keyframes underline{ from{transform:scaleX(0); opacity:0} to{transform:scaleX(1); opacity:.9} }
-@keyframes bg-pan{
-  from{ background-position:0 0, center }
-  to{ background-position:40px 0, center }
-}
-
-/* ---------- Mobile tweaks ---------- */
-@media (max-width:600px){
-  .tos-container{ padding:18px; border-radius:12px }
-}
-
-/* ---------- Reduced motion ---------- */
-@media (prefers-reduced-motion: reduce){
-  *{ animation:none !important; transition:none !important }
-}
-
+    .tos-item p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
-  <div class="tos-container">
-    <h1>Day of Job Contract</h1>
-    <p class="subtitle">
-      By agreeing, you acknowledge and consent to all terms outlined in this agreement. You grant M&G Pressure Washing Services full permission to perform all services described.
-    </p>
-    <div class="tos-text">
-1. Use of Water  
-You authorize M&G Pressure Washing Services to use your water supply during the cleaning process.
+  <main class="page-wrapper" style="max-width: 900px;">
+    <div class="premium-card" style="flex-direction: column;">
+      
+      <header class="tos-header">
+        <img src="mglogo.png" alt="M&G Logo" class="tos-logo">
+        <h1 style="position: relative; z-index: 2; font-size: 2rem;">Day of Job Contract</h1>
+        <p style="color: var(--brand-text-muted); position: relative; z-index: 2; max-width: 600px; margin: 10px auto;">
+          By using our services, you acknowledge and consent to the terms outlined below.
+        </p>
+        <div class="blob-1"></div>
+      </header>
 
-2. Garbage Can Liability  
-We are not responsible for any damage to garbage cans. The customer is liable for any damages including pre-existing wear, aging plastic, structural weakness, etc.
+      <section class="tos-content">
+        <div class="tos-grid">
+          <div class="tos-item stagger-1">
+            <h3><span>1</span> Use of Water</h3>
+            <p>You authorize M&G Pressure Washing Services to use your property's water supply during the cleaning process.</p>
+          </div>
 
-3. Access Requirements  
-You agree to provide safe, unobstructed access to your cans on service day.
+          <div class="tos-item stagger-2">
+            <h3><span>2</span> Liability</h3>
+            <p>M&G is not responsible for damage to garbage cans resulting from pre-existing wear, aging plastic, or structural weakness.</p>
+          </div>
 
-4. Refund Policy  
-No refunds are offered once cleaning is completed.
+          <div class="tos-item stagger-3">
+            <h3><span>3</span> Access</h3>
+            <p>You agree to provide safe, unobstructed access to your garbage cans on the scheduled service day.</p>
+          </div>
 
-5. Weather Delays  
-Severe weather may result in rescheduling at our discretion.
+          <div class="tos-item stagger-4">
+            <h3><span>4</span> Refunds</h3>
+            <p>No refunds are offered once the cleaning service is completed to the professional standard of M&G.</p>
+          </div>
 
-6. Waste Handling  
-Any remaining residue inside the garbage cans will be removed by our team, placed into a garbage bag, and properly disposed of upon completion of the job.
+          <div class="tos-item stagger-5">
+            <h3><span>5</span> Weather</h3>
+            <p>Severe weather may result in rescheduling at our discretion to ensure the safety of our team and your property.</p>
+          </div>
 
-7. Media Permission  
-Media such as photos and videos may be used for documentation or promotion. No personal info will be shown.
+          <div class="tos-item stagger-6">
+            <h3><span>6</span> Waste Handling</h3>
+            <p>Residue removed will be bagged and properly disposed of. We leave your property cleaner than we found it.</p>
+          </div>
+        </div>
 
-8. Acknowledgment  
-By using our services, you acknowledge and agree to these terms.
+        <footer style="margin-top: 3rem; text-align: center; border-top: 1px solid var(--border-color); padding-top: 2rem;">
+          <p style="font-size: 0.9rem; color: var(--text-muted);">
+            Questions? Contact us before your service date.
+          </p>
+        </footer>
+      </section>
+
     </div>
-  </div>
+  </main>
 </body>
 </html>
