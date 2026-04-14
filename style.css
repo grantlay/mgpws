@@ -55,6 +55,122 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* =========================================
+   Mobile Optimization & Scaling
+   ========================================= */
+
+/* 1. Responsive Layout Logic */
+@media (max-width: 860px) {
+  body {
+    padding: 1rem; /* Smaller padding around the card */
+    align-items: flex-start; /* Better for long forms on mobile */
+  }
+
+  .premium-card {
+    flex-direction: column; /* Stack panels vertically */
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .brand-panel {
+    flex: 0 0 auto;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .brand-panel h1 {
+    font-size: 1.75rem;
+  }
+
+  .brand-panel p {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Simplify features for mobile to save space */
+  .feature-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .feature-list li {
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 12px;
+    border-radius: 50px;
+  }
+
+  .form-panel {
+    padding: 2rem 1.5rem;
+  }
+
+  .input-row {
+    flex-direction: column;
+    gap: 0; /* Reset gap since margin-bottom handles it on inputs */
+  }
+}
+
+/* 2. Small Phone & High-Density Fixes */
+@media (max-width: 480px) {
+  body {
+    padding: 0;
+    background-color: var(--card-bg); /* Match card to body for "seamless" look */
+  }
+
+  .page-wrapper {
+    max-width: 100%;
+  }
+
+  .premium-card {
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
+
+  .brand-panel {
+    padding: 3rem 1rem 2rem;
+  }
+
+  /* Scale down the logo to prevent it from dominating the screen */
+  .main-logo {
+    max-width: 180px;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-header h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Increase touch targets for mobile inputs */
+  .submit-btn {
+    padding: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .checkmark {
+    width: 28px; /* Slightly larger for easier tapping */
+    height: 28px;
+  }
+}
+
+/* 3. Handling the "Blobs" on Mobile */
+@media (max-width: 860px) {
+  .blob-1 {
+    width: 200px;
+    height: 200px;
+    top: -50px;
+    left: -50px;
+  }
+  .blob-2 {
+    width: 150px;
+    height: 150px;
+    bottom: -30px;
+    right: -30px;
+  }
+}
+
 /* Layout Wrapper */
 .page-wrapper {
   width: 100%;
