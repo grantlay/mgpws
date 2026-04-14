@@ -2,134 +2,140 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Success | M&G Pressure Washing</title>
   <link rel="icon" href="mglogo.png" type="image/png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Thank You</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Page-specific polish that reuses your global tokens/animations */
-
-    .thank-wrap {
-      display: grid;
-      place-items: start center;
-      min-height: 100dvh;
-      padding: clamp(20px, 4vw, 48px) 16px;
-    }
-
-    /* Reuse the same card style as forms */
-    .thank-card.form-container {
-      position: relative;
-      max-width: 520px;
-      animation: card-in 500ms cubic-bezier(.2,.7,.2,1) both;
-    }
-    .thank-card.form-container::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      border-radius: inherit;
-      pointer-events: none;
-      background: linear-gradient(120deg, transparent 0%, rgba(43,127,255,.35) 50%, transparent 100%);
-      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude;
-      padding: 1px; opacity: .35; filter: blur(.5px);
-    }
-
-    /* Title & subtitle use your global styles; add entrance */
-    h1.title { animation: rise-in .5s .05s both; }
-    p.subtitle { animation: rise-in .5s .1s both; }
-
-    /* Quote box matches the theme */
-    .quote-box {
-      margin-top: 1.25rem;
-      padding: 1.25rem 1rem;
-      background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-1);
+    /* Specific overrides to fix the "weird" spacing */
+    .success-card {
+      max-width: 500px;
+      margin: 0 auto;
       text-align: center;
-      animation: rise-in .5s .14s both;
-    }
-    .quote-label {
-      font-size: 1rem;
-      margin-bottom: .35rem;
-      color: var(--muted);
-    }
-    .quote-price {
-      font-size: clamp(22px, 4.6vw, 28px);
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      color: var(--text);
     }
 
-    /* Button back to home (optional) */
-    .actions {
-      margin-top: 1rem;
+    .brand-header {
+      padding: 40px 20px 20px;
+      border-bottom: 1px solid var(--border-color);
       display: flex;
       justify-content: center;
     }
-    .actions a.button {
-      display: inline-block;
-      text-decoration: none;
-      padding: 12px 14px;
+
+    .finish-logo {
+      height: 55px; /* Fixed height for consistency */
+      width: auto;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+    }
+
+    .success-content {
+      padding: 40px 30px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      background: rgba(43, 127, 255, 0.1);
+      color: var(--primary);
+      border-radius: 50%;
+      margin-bottom: 24px;
+      animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .quote-display {
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
       border-radius: 12px;
-      border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
-      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-600) 100%);
-      color: #fff;
+      padding: 24px;
+      margin: 30px 0;
+      animation: slideUp 0.6s ease 0.2s both;
+    }
+
+    .quote-display span {
+      display: block;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .quote-display strong {
+      font-size: 2.2rem;
+      color: var(--primary);
+      display: block;
+    }
+
+    .back-link {
+      text-decoration: none;
       font-weight: 600;
-      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
-      box-shadow: 0 10px 20px color-mix(in srgb, var(--primary) 25%, transparent);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
     }
-    .actions a.button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 28px color-mix(in srgb, var(--primary) 30%, transparent);
-      filter: saturate(1.05);
-    }
-    .actions a.button:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 4px var(--ring), 0 10px 20px color-mix(in srgb, var(--primary) 25%, transparent);
+
+    .back-link:hover {
+      color: var(--primary);
     }
   </style>
 </head>
 <body>
-  <div class="zoom-wrapper thank-wrap">
-    <div class="form-container thank-card">
-      <h1 class="title">Thanks for Submitting</h1>
-      <p class="subtitle">Someone on our team will call you back soon!</p>
-
-      <div class="quote-box">
-        <div class="quote-label" id="quoteLabel">Calculating your quote...</div>
-        <div class="quote-price" id="quotePrice">—</div>
+  <main class="page-wrapper">
+    <div class="premium-card success-card" style="flex-direction: column;">
+      
+      <div class="brand-header">
+        <img src="mglogo.png" alt="M&G Logo" class="finish-logo">
       </div>
 
-      <!-- Optional: CTA back home -->
-      <!--
-      <div class="actions">
-        <a class="button" href="index.html">Back to Home</a>
+      <div class="success-content">
+        <div class="status-badge">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="3">
+            <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <h1 style="font-size: 1.8rem; margin-bottom: 12px;">Submission Received</h1>
+        <p style="color: var(--text-muted); line-height: 1.6;">
+          Thanks for reaching out! One of our specialists will review your details and call you shortly.
+        </p>
+
+        <div class="quote-display">
+          <span id="quoteLabel">Your Estimated Quote</span>
+          <strong id="quotePrice">—</strong>
+        </div>
+
+        <a href="index.html" class="back-link">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Return to home
+        </a>
       </div>
-      -->
+
     </div>
-  </div>
+  </main>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const service = params.get("service");
-
     const label = document.getElementById("quoteLabel");
     const priceEl = document.getElementById("quotePrice");
 
-    // Defensive: handle missing/unknown service
     const map = {
-      "1 Garbage Can": "⭐ Only $5",
-      "2 Garbage Cans": "⭐ Only $10",
-      "3+ Garbage Cans": "⭐ Only $15 (Minimum)"
+      "1 Garbage Can": "$5.00",
+      "2 Garbage Cans": "$10.00",
+      "3+ Garbage Cans": "$15.00+"
     };
-    const price = map[service] ?? "N/A";
 
-    label.textContent = service
-      ? `Your estimated quote for "${service}":`
-      : "Your estimated quote:";
-    priceEl.textContent = price;
+    if (service) {
+      label.textContent = `Estimated for ${service}`;
+      priceEl.textContent = map[service] || "Quote Pending";
+    }
   </script>
 </body>
 </html>
